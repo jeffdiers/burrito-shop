@@ -1,15 +1,9 @@
 import "reflect-metadata";
+import "dotenv/config";
 import { DataSource } from "typeorm";
-import { User } from "./entity/User";
-
-console.log(
-  "ENV VARS",
-  process.env.DB_HOST,
-  process.env.DB_PORT,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
-  process.env.DB_NAME
-);
+import { Burrito } from "../src/entity/Burrito";
+import { Order } from "../src/entity/Order";
+import { OrderItem } from "../src/entity/OrderItem";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -20,7 +14,7 @@ export const AppDataSource = new DataSource({
   database: process.env.DB_NAME,
   synchronize: true,
   logging: false,
-  entities: [User],
-  migrations: [],
+  entities: [Burrito, Order, OrderItem],
+  migrations: ["./src/migration/*.ts"],
   subscribers: [],
 });
