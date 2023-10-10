@@ -1,17 +1,17 @@
-import { TestAppDataSource } from "../util/test-data-source";
-import { Burrito } from "../src/entity/Burrito";
+import { AppDataSource } from "../../util/data-source";
+import { Burrito } from "../../src/entity/Burrito";
 import { DataSource, Repository } from "typeorm";
 
 describe("Burrito Entity", () => {
   let connection: DataSource;
   let burritoRepository: Repository<Burrito>;
 
-  beforeAll(async () => {
-    connection = await TestAppDataSource.initialize();
+  beforeEach(async () => {
+    connection = await AppDataSource.initialize();
     burritoRepository = connection.manager.getRepository(Burrito);
   });
 
-  afterAll(async () => {
+  afterEach(async () => {
     await connection.dropDatabase();
     await connection.destroy();
   });

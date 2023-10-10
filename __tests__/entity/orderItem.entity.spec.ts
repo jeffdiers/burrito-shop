@@ -1,5 +1,5 @@
-import { TestAppDataSource } from "../util/test-data-source";
-import { OrderItem } from "../src/entity/OrderItem";
+import { AppDataSource } from "../../util/data-source";
+import { OrderItem } from "../../src/entity/OrderItem";
 import { DataSource, Repository } from "typeorm";
 
 describe("OrderItem Entity", () => {
@@ -7,7 +7,7 @@ describe("OrderItem Entity", () => {
   let orderItemRepository: Repository<OrderItem>;
 
   beforeEach(async () => {
-    connection = await TestAppDataSource.initialize();
+    connection = await AppDataSource.initialize();
     orderItemRepository = connection.manager.getRepository(OrderItem);
   });
 

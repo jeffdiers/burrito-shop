@@ -1,9 +1,13 @@
 import "dotenv/config";
 
 import { AppDataSource } from "../util/data-source";
+// import { AppDataSource } from "../util/test-data-source";
 import { Burrito } from "./entity/Burrito";
 import { OrderItem } from "./entity/OrderItem";
 import { Order } from "./entity/Order";
+import { BurritoResolver } from "./resolver/BurritoResolver";
+import { buildSchema } from "type-graphql";
+import { ApolloServer } from "apollo-server";
 
 AppDataSource.initialize()
   .then(async () => {
@@ -44,5 +48,26 @@ AppDataSource.initialize()
     console.log(
       "Here you can setup and run express / fastify / any other framework."
     );
+
+    const schema = await buildSchema({
+      resolvers: [BurritoResolver],
+    });
+
+    const server = new ApolloServer({ schema });
+
+    const response = await server.executeOperation({
+      query: `
+        query {
+          burritos {
+            id
+            name
+            size
+            price
+          }
+        }
+      `,
+    });
+
+    console.log("RESPONSE", response);
   })
   .catch((error) => console.log(error));
