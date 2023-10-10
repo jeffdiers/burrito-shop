@@ -4,19 +4,19 @@ import { ObjectType, Field, ID } from "type-graphql";
 @Entity()
 @ObjectType()
 export class Burrito {
-  @Field(() => ID)
   @PrimaryGeneratedColumn()
+  @Field(() => ID)
   id: number;
 
-  @Field()
   @Column()
+  @Field()
   name: string;
 
-  @Field()
   @Column()
+  @Field()
   size: string;
 
-  @Field()
   @Column("decimal", { precision: 10, scale: 2 })
+  @Field()
   price: number;
 }

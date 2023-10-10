@@ -41,7 +41,7 @@ export class BurritoResolver {
   }
 
   /**
-   * Fetches all users from the database.
+   * Fetches all burritos from the database.
    * @returns {Promise<User[]>} A promise that resolves to an array of users.
    **/
   @Query(() => [Burrito])

@@ -1,11 +1,11 @@
 import { AppDataSource } from "../../util/data-source";
 import { Burrito } from "../../src/entity/Burrito";
 import { BurritoResolver } from "../../src/resolver/BurritoResolver";
-import { DataSource, Repository } from "typeorm";
+import { DataSource } from "typeorm";
 import { ApolloServer } from "apollo-server";
 import { buildSchema } from "type-graphql";
 
-describe("Burrito Entity", () => {
+describe("Burrito Resolver", () => {
   let connection: DataSource;
   let apolloServer: ApolloServer;
 
