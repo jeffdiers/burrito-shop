@@ -3,7 +3,7 @@ import { Burrito } from "../entity/Burrito";
 import { AppDataSource } from "../../util/data-source";
 import { type Repository } from "typeorm";
 
-@Resolver((_of) => Burrito)
+@Resolver(() => Burrito)
 export class BurritoResolver {
   private readonly burritoRepository: Repository<Burrito>;
 
@@ -12,26 +12,40 @@ export class BurritoResolver {
   }
 
   /**
+   * Creates a new burrito in the database.
+   * @param name
+   * @param size
+   * @param price
+   * @returns {Promise<Burrito>} A promise that resolves to a burrito.
+   */
+  @Mutation(() => Burrito)
+  async createBurrito(
+    @Arg("name") name: string,
+    @Arg("size") size: string,
+    @Arg("price") price: number
+  ): Promise<Burrito> {
+    const burrito = this.burritoRepository.create({ name, size, price });
+    await this.burritoRepository.save(burrito);
+    return burrito;
+  }
+
+  /**
+   * Fetches a burrito by ID from the database.
+   * @param id
+   * @returns {Promise<Burrito | undefined>} A promise that resolves to a burrito.
+   */
+  @Query(() => Burrito, { nullable: true })
+  async getBurritoById(@Arg("id") id: number): Promise<Burrito | null> {
+    const burrito = await this.burritoRepository.findOneBy({ id });
+    return burrito || null;
+  }
+
+  /**
    * Fetches all users from the database.
    * @returns {Promise<User[]>} A promise that resolves to an array of users.
    **/
-  @Query((_returns) => [Burrito])
+  @Query(() => [Burrito])
   async burritos(): Promise<Burrito[]> {
     return await this.burritoRepository.find();
   }
-
-  // @Query(() => User)
-  // async user(@Arg("id") id: number): Promise<User | undefined> {
-  //   // Implement your logic to fetch a user by ID from the database
-  //   const user = await User.findOne(id);
-  //   return user;
-  // }
-
-  // @Mutation(() => User)
-  // async createUser(@Arg("name") name: string): Promise<User> {
-  //   // Implement your logic to create a user and save it to the database
-  //   const user = User.create({ name });
-  //   await user.save();
-  //   return user;
-  // }
 }

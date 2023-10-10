@@ -7,12 +7,10 @@ import { buildSchema } from "type-graphql";
 
 describe("Burrito Entity", () => {
   let connection: DataSource;
-  let burritoRepository: Repository<Burrito>;
   let apolloServer: ApolloServer;
 
   beforeAll(async () => {
     connection = await AppDataSource.initialize();
-    burritoRepository = connection.manager.getRepository(Burrito);
 
     const schema = await buildSchema({
       resolvers: [BurritoResolver],
@@ -25,20 +23,36 @@ describe("Burrito Entity", () => {
     await connection.destroy();
   });
 
+  it("should create a burrito", async () => {
+    const newBurrito = new Burrito();
+    newBurrito.name = "Test Burrito";
+    newBurrito.size = "Regular";
+    newBurrito.price = 4.99;
+
+    const response = await apolloServer.executeOperation({
+      query: `
+        mutation {
+          createBurrito(
+            name: "${newBurrito.name}"
+            size: "${newBurrito.size}"
+            price: ${newBurrito.price}
+          ) {
+            id
+            name
+            size
+            price
+          }
+        }
+      `,
+    });
+
+    expect(response.errors).toBeUndefined();
+    expect(response.data).toBeDefined();
+    expect(response.data!.createBurrito).toBeDefined();
+    expect(response.data!.createBurrito.name).toEqual(newBurrito.name);
+  });
+
   it("should fetch all burritos", async () => {
-    const newBurrito1 = new Burrito();
-    newBurrito1.name = "Test Burrito";
-    newBurrito1.size = "Regular";
-    newBurrito1.price = 4.99;
-
-    const newBurrito2 = new Burrito();
-    newBurrito2.name = "Test Burrito - 2";
-    newBurrito2.size = "Regular";
-    newBurrito2.price = 4.99;
-
-    await burritoRepository.save(newBurrito1);
-    await burritoRepository.save(newBurrito2);
-
     const response = await apolloServer.executeOperation({
       query: `
         query {
@@ -55,7 +69,54 @@ describe("Burrito Entity", () => {
     expect(response.errors).toBeUndefined();
     expect(response.data).toBeDefined();
     expect(response.data!.burritos).toBeDefined();
-    expect(response.data!.burritos.length).toEqual(2);
-    expect(response.data!.burritos[0].name).toEqual(newBurrito1.name);
+    expect(response.data!.burritos.length).toEqual(1);
+    expect(response.data!.burritos[0].name).toEqual("Test Burrito");
+  });
+
+  it("should get a burrito by ID", async () => {
+    const response = await apolloServer.executeOperation({
+      query: `
+        query {
+          getBurritoById(id: 1) {
+            id
+            name
+            size
+            price
+          }
+        }
+      `,
+    });
+
+    expect(response.errors).toBeUndefined();
+    expect(response.data).toBeDefined();
+    expect(response.data).toEqual({
+      getBurritoById: {
+        id: "1",
+        name: "Test Burrito",
+        size: "Regular",
+        price: 4.99,
+      },
+    });
+  });
+
+  it("should return null for a non-existent burrito", async () => {
+    const response = await apolloServer.executeOperation({
+      query: `
+        query {
+          getBurritoById(id: 2) {
+            id
+            name
+            size
+            price
+          }
+        }
+      `,
+    });
+
+    expect(response.errors).toBeUndefined();
+    expect(response.data).toBeDefined();
+    expect(response.data).toEqual({
+      getBurritoById: null,
+    });
   });
 });
