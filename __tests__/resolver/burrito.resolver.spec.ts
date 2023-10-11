@@ -119,4 +119,48 @@ describe("Burrito Resolver", () => {
       getBurritoById: null,
     });
   });
+
+  it("should Update a burrito", async () => {
+    const response = await apolloServer.executeOperation({
+      query: `
+        mutation {
+          updateBurrito(
+            id: 1
+            name: "Test Burrito"
+            size: "Large"
+            price: 6.99
+          ) {
+            id
+            name
+            size
+            price
+          }
+        }
+      `,
+    });
+
+    expect(response.errors).toBeUndefined();
+    expect(response.data).toBeDefined();
+    expect(response.data!.updateBurrito).toBeDefined();
+    expect(response.data!.updateBurrito.size).toEqual("Large");
+  });
+
+  it("should delete a burrito", async () => {
+    const response = await apolloServer.executeOperation({
+      query: `
+        mutation {
+          deleteBurrito(id: 1) {
+            id
+            name
+            size
+            price
+          }
+        }
+      `,
+    });
+
+    expect(response.errors).toBeUndefined();
+    expect(response.data).toBeDefined();
+    expect(response.data!.deleteBurrito.id).toEqual("1");
+  });
 });

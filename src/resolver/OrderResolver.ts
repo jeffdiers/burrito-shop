@@ -23,6 +23,34 @@ export class OrderResolver {
   }
 
   /**
+   * Deletes an order from the database.
+   * @param orderId
+   * @returns {Promise<Order>} A promise that resolves to an order item.
+   */
+  @Mutation(() => Order)
+  async deleteOrder(@Arg("id") id: number): Promise<Order> {
+    try {
+      const order = await this.orderRepository.findOne({
+        where: { id },
+        relations: ["items", "items.burrito"],
+      });
+      if (!order) {
+        throw new Error("Order not found");
+      }
+
+      // Remove all order items
+      for (const item of order.items) {
+        await AppDataSource.getRepository("OrderItem").delete(item.id);
+      }
+
+      await this.orderRepository.delete(id);
+      return order;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  /**
    * Fetches order by ID.
    * @returns {Promise<Order>} A promise that resolves to an array of order items.
    */

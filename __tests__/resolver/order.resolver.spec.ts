@@ -122,4 +122,20 @@ describe("Order Resolver", () => {
     expect(response.data!.orders.length).toEqual(2);
     expect(response.data!.orders[0].totalPrice).toEqual(12);
   });
+
+  it("should delete an order and all its items", async () => {
+    const response = await apolloServer.executeOperation({
+      query: `
+        mutation {
+          deleteOrder(id: 2) {
+            id
+          }
+        }
+      `,
+    });
+
+    expect(response.errors).toBeUndefined();
+    expect(response.data).toBeDefined();
+    expect(response.data!.deleteOrder.id).toEqual("2");
+  });
 });

@@ -15,7 +15,7 @@ export class Order {
   @Field(() => ID)
   id: number;
 
-  @OneToMany(() => OrderItem, (orderItem) => orderItem.order, { cascade: true })
+  @OneToMany(() => OrderItem, (orderItem) => orderItem.order, { cascade: true }) // Enable cascading delete
   @JoinColumn()
   @Field(() => [OrderItem])
   items: OrderItem[];

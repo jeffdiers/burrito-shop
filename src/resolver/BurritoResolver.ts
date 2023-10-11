@@ -30,6 +30,50 @@ export class BurritoResolver {
   }
 
   /**
+   * Update a burrito in the database.
+   * @param id
+   * @param name
+   * @param size
+   * @param price
+   * @returns {Promise<Burrito>} A promise that resolves to a burrito.
+   */
+  @Mutation(() => Burrito)
+  async updateBurrito(
+    @Arg("id") id: number,
+    @Arg("name") name: string,
+    @Arg("size") size: string,
+    @Arg("price") price: number
+  ): Promise<Burrito> {
+    const burrito = await this.burritoRepository.findOneBy({ id });
+    if (!burrito) {
+      throw new Error("Burrito not found");
+    }
+
+    burrito.name = name;
+    burrito.size = size;
+    burrito.price = price;
+
+    await this.burritoRepository.save(burrito);
+    return burrito;
+  }
+
+  /**
+   * Deletes a burrito from the database.
+   * @param id
+   * @returns {Promise<Burrito>} A promise that resolves to a burrito.
+   */
+  @Mutation(() => Burrito)
+  async deleteBurrito(@Arg("id") id: number): Promise<Burrito> {
+    const burrito = await this.burritoRepository.findOneBy({ id });
+    if (!burrito) {
+      throw new Error("Burrito not found");
+    }
+
+    await this.burritoRepository.delete(burrito);
+    return burrito;
+  }
+
+  /**
    * Fetches a burrito by ID from the database.
    * @param id
    * @returns {Promise<Burrito | undefined>} A promise that resolves to a burrito.

@@ -48,6 +48,58 @@ export class OrderItemResolver {
   }
 
   /**
+   * Updates an order item in the database.
+   * @param id
+   * @param quantity
+   * @param burritoId
+   * @param orderId
+   * @returns {Promise<OrderItem>} A promise that resolves to an order item.
+   */
+  @Mutation(() => OrderItem)
+  async updateOrderItem(
+    @Arg("id") id: number,
+    @Arg("quantity") quantity: number,
+    @Arg("burritoId") burritoId: number,
+    @Arg("orderId") orderId: number
+  ): Promise<OrderItem> {
+    const orderItem = await this.orderItemRepository.findOneBy({ id });
+    if (!orderItem) {
+      throw new Error("Order item not found");
+    }
+
+    // find the order and burrito
+    const burrito = await this.burritoRepository.findOneBy({ id: burritoId });
+    const order = await this.orderRepository.findOneBy({ id: orderId });
+
+    if (!burrito || !order) {
+      throw new Error("Burrito or order not found");
+    }
+
+    orderItem.quantity = quantity;
+    orderItem.burrito = burrito;
+    orderItem.order = order;
+
+    await this.orderItemRepository.save(orderItem);
+    return orderItem;
+  }
+
+  /**
+   * Deletes an order item from the database.
+   * @param id
+   * @returns {Promise<OrderItem>} A promise that resolves to an order item.
+   */
+  @Mutation(() => OrderItem)
+  async deleteOrderItem(@Arg("id") id: number): Promise<OrderItem> {
+    const orderItem = await this.orderItemRepository.findOneBy({ id });
+    if (!orderItem) {
+      throw new Error("Order item not found");
+    }
+
+    await this.orderItemRepository.delete(id);
+    return orderItem;
+  }
+
+  /**
    * Fetches all order items from the database.
    * @returns {Promise<OrderItem[]>} A promise that resolves to an array of order items.
    */

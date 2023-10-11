@@ -86,4 +86,45 @@ describe("Order Item Resolver", () => {
     expect(response.data!.orderItems).toBeDefined();
     expect(response.data!.orderItems.length).toEqual(1);
   });
+
+  it("should update an order item", async () => {
+    const response = await apolloServer.executeOperation({
+      query: `
+        mutation {
+          updateOrderItem(
+            id: 1
+            quantity: 3
+            burritoId: 1
+            orderId: 1
+          ) {
+            id
+            quantity
+          }
+        }
+      `,
+    });
+
+    expect(response.errors).toBeUndefined();
+    expect(response.data).toBeDefined();
+    expect(response.data!.updateOrderItem).toBeDefined();
+    expect(response.data!.updateOrderItem.quantity).toEqual(3);
+  });
+
+  it("should delete an order item", async () => {
+    const response = await apolloServer.executeOperation({
+      query: `
+        mutation {
+          deleteOrderItem(id: 1) {
+            id
+            quantity
+          }
+        }
+      `,
+    });
+
+    expect(response.errors).toBeUndefined();
+    expect(response.data).toBeDefined();
+    expect(response.data!.deleteOrderItem).toBeDefined();
+    expect(response.data!.deleteOrderItem.quantity).toEqual(3);
+  });
 });
