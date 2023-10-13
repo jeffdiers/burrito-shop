@@ -36,8 +36,8 @@ jobs:
       - name: Install Docker
         run: |
           # Install Docker
-          sudo apt-get update
-          sudo apt-get install -y docker.io
+          sudo yum update
+          sudo yum install -y docker
 
       - name: Pull Docker image
         run: docker pull jeffdiers/burrito-shop:latest
