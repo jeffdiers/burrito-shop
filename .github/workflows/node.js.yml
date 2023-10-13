@@ -40,8 +40,8 @@ jobs:
           sudo yum install -y docker
 
       - name: Pull Docker image
-        run: docker pull jeffdiers/burrito-shop:latest
+        run: sudo docker pull jeffdiers/burrito-shop:latest
 
       - name: Run Docker container
         run: |
-          docker run -d --name burrito-shop -p 80:4000 --network host -e DB_HOST=localhost -e DB_PORT=5432 -e DB_USER=${{ secrets.DB_USER }} -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} -e DB_NAME=${{ secrets.DB_NAME }} -e API_KEY=${{ secrets.API_KEY }} jeffdiers/burrito-shop:latest
+          sudo docker run -d --name burrito-shop -p 80:4000 --network host -e DB_HOST=localhost -e DB_PORT=5432 -e DB_USER=${{ secrets.DB_USER }} -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} -e DB_NAME=${{ secrets.DB_NAME }} -e API_KEY=${{ secrets.API_KEY }} jeffdiers/burrito-shop:latest
