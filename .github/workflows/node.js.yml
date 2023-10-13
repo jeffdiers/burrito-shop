@@ -39,6 +39,18 @@ jobs:
           sudo yum update
           sudo yum install -y docker
 
+      - name: Stop and Remove Existing Container
+        run: |
+          # Stop the existing container if it's running
+          if [ "$(docker ps -aq -f name=burrito-shop)" ]; then
+            docker stop burrito-shop
+          fi
+
+          # Remove the existing container if it exists
+          if [ "$(docker ps -aq -f name=burrito-shop)" ]; then
+            docker rm burrito-shop
+          fi
+
       - name: Pull Docker image
         run: sudo docker pull jeffdiers/burrito-shop:latest
 
