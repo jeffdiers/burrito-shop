@@ -15,7 +15,7 @@ async function main() {
   });
 
   const app = express();
-  // app.use(apiKeyMiddleware); // Uncomment this line to enable API key authentication. Need CA certificate to test.
+  app.use(apiKeyMiddleware);
   const server = new ApolloServer({ schema });
   await server.start();
 
