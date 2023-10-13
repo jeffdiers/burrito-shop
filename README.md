@@ -17,6 +17,7 @@ curl --request POST \
 ```bash
 curl --request POST \
     --header 'content-type: application/json' \
-    --url 'https://ec2-54-234-208-224.compute-1.amazonaws.com/' \
-    --data '{"query":"query {\n  burritos {\n    id\n    name\n    size\n    price\n  }\n}"}'
+    --header 'api-key: api-key-123' \
+    --url 'https://184.73.28.90/' \
+    --data '{"query":"query Query {\n burritos {\n id\n name\n size\n price\n }\n}"}'
 ```
