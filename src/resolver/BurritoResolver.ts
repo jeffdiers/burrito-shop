@@ -1,7 +1,8 @@
-import { Resolver, Query, Mutation, Arg } from "type-graphql";
+import { Authorized, Resolver, Query, Mutation, Arg } from "type-graphql";
 import { Burrito } from "../entity/Burrito";
 import { AppDataSource } from "../../util/data-source";
 import { type Repository } from "typeorm";
+import { UserRole } from "../../util/authChecker";
 
 @Resolver(() => Burrito)
 export class BurritoResolver {
@@ -18,6 +19,7 @@ export class BurritoResolver {
    * @param price
    * @returns {Promise<Burrito>} A promise that resolves to a burrito.
    */
+  @Authorized(UserRole.ADMIN)
   @Mutation(() => Burrito)
   async createBurrito(
     @Arg("name") name: string,
@@ -37,6 +39,7 @@ export class BurritoResolver {
    * @param price
    * @returns {Promise<Burrito>} A promise that resolves to a burrito.
    */
+  @Authorized(UserRole.ADMIN)
   @Mutation(() => Burrito)
   async updateBurrito(
     @Arg("id") id: number,
@@ -62,6 +65,7 @@ export class BurritoResolver {
    * @param id
    * @returns {Promise<Burrito>} A promise that resolves to a burrito.
    */
+  @Authorized(UserRole.ADMIN)
   @Mutation(() => Burrito)
   async deleteBurrito(@Arg("id") id: number): Promise<Burrito> {
     const burrito = await this.burritoRepository.findOneBy({ id });

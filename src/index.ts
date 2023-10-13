@@ -5,18 +5,31 @@ import { OrderItemResolver } from "./resolver/OrderItemResolver";
 import { OrderResolver } from "./resolver/OrderResolver";
 import { buildSchema } from "type-graphql";
 import { ApolloServer } from "apollo-server-express";
-import apiKeyMiddleware from "../util/apiKeyMiddleware";
+import { UserRole } from "../util/authChecker";
+import { customAuthChecker } from "../util/authChecker";
 
 async function main() {
   await AppDataSource.initialize();
 
   const schema = await buildSchema({
     resolvers: [BurritoResolver, OrderItemResolver, OrderResolver],
+    authChecker: customAuthChecker,
   });
 
   const app = express();
-  // app.use(apiKeyMiddleware);
-  const server = new ApolloServer({ schema });
+  const server = new ApolloServer({
+    schema,
+    context: ({ req }) => {
+      // Get the user token from the headers and use it to find the user
+      const token = req.headers.authorization;
+      const currentUser =
+        token === process.env.API_KEY
+          ? { id: "1", username: "test", role: UserRole.ADMIN }
+          : null;
+
+      return { currentUser };
+    },
+  });
   await server.start();
 
   server.applyMiddleware({ app });

@@ -1,9 +1,10 @@
-import { Resolver, Query, Mutation, Arg } from "type-graphql";
+import { Authorized, Resolver, Query, Mutation, Arg } from "type-graphql";
 import { OrderItem } from "../entity/OrderItem";
 import { Burrito } from "../entity/Burrito";
 import { Order } from "../entity/Order";
 import { AppDataSource } from "../../util/data-source";
 import { type Repository } from "typeorm";
+import { UserRole } from "../../util/authChecker";
 
 @Resolver(() => OrderItem)
 export class OrderItemResolver {
@@ -24,6 +25,7 @@ export class OrderItemResolver {
    * @param orderId
    * @returns {Promise<OrderItem>} A promise that resolves to an order item.
    */
+  @Authorized(UserRole.ADMIN)
   @Mutation(() => OrderItem)
   async createOrderItem(
     @Arg("quantity") quantity: number,
@@ -55,6 +57,7 @@ export class OrderItemResolver {
    * @param orderId
    * @returns {Promise<OrderItem>} A promise that resolves to an order item.
    */
+  @Authorized(UserRole.ADMIN)
   @Mutation(() => OrderItem)
   async updateOrderItem(
     @Arg("id") id: number,
@@ -88,6 +91,7 @@ export class OrderItemResolver {
    * @param id
    * @returns {Promise<OrderItem>} A promise that resolves to an order item.
    */
+  @Authorized(UserRole.ADMIN)
   @Mutation(() => OrderItem)
   async deleteOrderItem(@Arg("id") id: number): Promise<OrderItem> {
     const orderItem = await this.orderItemRepository.findOneBy({ id });

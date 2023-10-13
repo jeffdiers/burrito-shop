@@ -1,7 +1,8 @@
-import { Resolver, Query, Mutation, Arg } from "type-graphql";
+import { Authorized, Resolver, Query, Mutation, Arg } from "type-graphql";
 import { Order } from "../entity/Order";
 import { AppDataSource } from "../../util/data-source";
 import { type Repository } from "typeorm";
+import { UserRole } from "../../util/authChecker";
 
 @Resolver(() => Order)
 export class OrderResolver {
@@ -15,6 +16,7 @@ export class OrderResolver {
    * Creates a new order in the database.
    * @returns {Promise<OrderItem>} A promise that resolves to an order item.
    */
+  @Authorized(UserRole.ADMIN)
   @Mutation(() => Order)
   async createOrder(): Promise<Order> {
     const order = this.orderRepository.create();
@@ -27,6 +29,7 @@ export class OrderResolver {
    * @param orderId
    * @returns {Promise<Order>} A promise that resolves to an order item.
    */
+  @Authorized(UserRole.ADMIN)
   @Mutation(() => Order)
   async deleteOrder(@Arg("id") id: number): Promise<Order> {
     try {
