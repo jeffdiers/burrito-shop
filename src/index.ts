@@ -15,7 +15,7 @@ async function main() {
   });
 
   const app = express();
-  app.use(apiKeyMiddleware);
+  // app.use(apiKeyMiddleware);
   const server = new ApolloServer({ schema });
   await server.start();
 

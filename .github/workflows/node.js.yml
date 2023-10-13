@@ -51,6 +51,13 @@ jobs:
             sudo docker rm burrito-shop
           fi
 
+      - name: Remove Old Docker Image # delete old image to save space on ec2 instance
+        run: |
+          # Remove the old Docker image if it exists
+          if [ "$(sudo docker images -aq jeffdiers/burrito-shop:latest)" ]; then
+            sudo docker rmi jeffdiers/burrito-shop:latest
+          fi
+
       - name: Pull Docker image
         run: sudo docker pull jeffdiers/burrito-shop:latest
 
