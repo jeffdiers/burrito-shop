@@ -42,13 +42,13 @@ jobs:
       - name: Stop and Remove Existing Container
         run: |
           # Stop the existing container if it's running
-          if [ "$(docker ps -aq -f name=burrito-shop)" ]; then
-            docker stop burrito-shop
+          if [ "$(sudo docker ps -aq -f name=burrito-shop)" ]; then
+            sudo docker stop burrito-shop
           fi
 
           # Remove the existing container if it exists
-          if [ "$(docker ps -aq -f name=burrito-shop)" ]; then
-            docker rm burrito-shop
+          if [ "$(sudo docker ps -aq -f name=burrito-shop)" ]; then
+            sudo docker rm burrito-shop
           fi
 
       - name: Pull Docker image
