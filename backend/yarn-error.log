@@ -1,0 +1,31 @@
+Arguments: 
+  /usr/local/Cellar/node/20.8.0/bin/node /usr/local/Cellar/yarn/1.22.19/libexec/bin/yarn.js install
+
+PATH: 
+  /var/folders/7c/yk8fs0ld3msbn2t_hc38fwyw0000gn/T/yarn--1697385119759-0.7574142364344907:/Users/jeffdiers/Documents/job-application/staffing-lab/burrito-shop/node_modules/.bin:/Users/jeffdiers/.config/yarn/link/node_modules/.bin:/usr/local/Cellar/node/20.8.0/libexec/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/Cellar/node/20.8.0/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/Cellar/node/20.8.0/bin/node_modules/npm/bin/node-gyp-bin:/usr/local/opt/postgresql@15/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/opt/postgresql@15/bin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  20.8.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  SyntaxError: /Users/jeffdiers/Documents/job-application/staffing-lab/burrito-shop/backend/package.json: Unexpected end of JSON input
+      at JSON.parse (<anonymous>)
+      at /usr/local/Cellar/yarn/1.22.19/libexec/lib/cli.js:1629:59
+      at Generator.next (<anonymous>)
+      at step (/usr/local/Cellar/yarn/1.22.19/libexec/lib/cli.js:310:30)
+      at /usr/local/Cellar/yarn/1.22.19/libexec/lib/cli.js:321:13
+
+npm manifest: 
+  
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
