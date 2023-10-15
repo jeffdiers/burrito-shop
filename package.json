@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Monolithic Burrito Shop Application",
   "scripts": {
-    "install": "cd backend && yarn install && cd ../frontend && yarn install",
+    "install:app": "cd backend && yarn install && cd ../frontend && yarn install",
     "start:backend": "cd backend && yarn start",
     "start:frontend": "cd frontend && yarn start",
     "start:app": "concurrently \"yarn run start:backend\" \"yarn run start:frontend\"",
