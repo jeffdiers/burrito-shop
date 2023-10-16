@@ -13,6 +13,20 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v4
 
+      - name: Generate secrets.env
+        run: |
+          echo "DB_USER=${{ secrets.DB_USER }}" > secrets.env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> secrets.env
+          echo "DB_NAME=${{ secrets.DB_NAME }}" >> secrets.env
+          echo "API_KEY=${{ secrets.API_KEY }}" >> secrets.env
+        shell: bash
+
+      - name: Upload secrets.env
+        uses: actions/upload-artifact@v2
+        with:
+          name: secrets-env
+          path: secrets.env
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -30,15 +44,15 @@ jobs:
   deploy:
     runs-on: self-hosted # Use your EC2 instance here
 
-    env:
-      DB_USER: ${{ secrets.DB_USER }}
-      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      DB_NAME: ${{ secrets.DB_NAME }}
-      API_KEY: ${{ secrets.API_KEY }}
-
     steps:
       - name: Checkout the code
         uses: actions/checkout@v2
+
+      - name: Download secrets.env
+        uses: actions/download-artifact@v2
+        with:
+          name: secrets-env
+          path: /tmp
 
       - name: Install Docker
         run: |
@@ -66,3 +80,5 @@ jobs:
       - name: Run Docker container
         run: |
           sudo docker-compose up -d
+        env:
+          ENV_FILE: /tmp/secrets.env
