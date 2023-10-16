@@ -40,8 +40,11 @@ jobs:
           docker-compose push
         env:
           DOCKER_CLI_AARCH64: docker
+          ENV_FILE: secrets.env
 
   deploy:
+    needs: build # This job depends on the "build" job
+
     runs-on: self-hosted # Use your EC2 instance here
 
     steps:
@@ -62,6 +65,8 @@ jobs:
 
       - name: Stop and Remove Existing Container
         run: sudo docker-compose down
+        env:
+          ENV_FILE: /tmp/secrets.env
 
       - name: Remove Old Docker Image # delete old image to save space on ec2 instance
         run: |
@@ -76,6 +81,8 @@ jobs:
 
       - name: Pull Docker image
         run: sudo docker-compose pull
+        env:
+          ENV_FILE: /tmp/secrets.env
 
       - name: Run Docker container
         run: |

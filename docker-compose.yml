@@ -12,10 +12,7 @@ services:
       context: ./backend # Path to the backend application directory
       dockerfile: Dockerfile
     image: jeffdiers/burrito-shop-backend:latest
-    environment:
-      - DB_USER=$DB_USER
-      - DB_PASSWORD=$DB_PASSWORD
-      - DB_NAME=$DB_NAME
-      - API_KEY=$API_KEY
+    env_file:
+      - ${ENV_FILE}
     ports:
       - "4000:4000"
