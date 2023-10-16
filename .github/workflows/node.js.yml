@@ -63,4 +63,4 @@ jobs:
 
       - name: Run Docker container
         run: |
-          sudo docker run --memory 512m -d --name burrito-shop --network host -e DB_HOST=localhost -e DB_PORT=5432 -e DB_USER=${{ secrets.DB_USER }} -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} -e DB_NAME=${{ secrets.DB_NAME }} -e API_KEY=${{ secrets.API_KEY }} jeffdiers/burrito-shop:latest
+          sudo docker run --memory 512m --memory-swap 512m -d --name burrito-shop --network host -e DB_HOST=localhost -e DB_PORT=5432 -e DB_USER=${{ secrets.DB_USER }} -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} -e DB_NAME=${{ secrets.DB_NAME }} -e API_KEY=${{ secrets.API_KEY }} jeffdiers/burrito-shop:latest
