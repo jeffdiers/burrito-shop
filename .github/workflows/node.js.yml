@@ -22,7 +22,7 @@ jobs:
         shell: bash
 
       - name: Upload secrets.env
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: secrets-env
           path: secrets.env
@@ -51,7 +51,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Download secrets.env
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: secrets-env
           path: /tmp

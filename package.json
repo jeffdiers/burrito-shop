@@ -4,9 +4,11 @@
   "description": "Monolithic Burrito Shop Application",
   "scripts": {
     "install:app": "cd backend && yarn install && cd ../frontend && yarn install",
+    "db:migrate": "cd backend && yarn run migration:run",
     "start:backend": "cd backend && yarn start",
     "start:frontend": "cd frontend && yarn start",
-    "start:app": "concurrently \"yarn run start:backend\" \"yarn run start:frontend\"",
+    "dev:frontend": "cd frontend && yarn dev",
+    "dev:app": "concurrently \"yarn run start:backend\" \"yarn run dev:frontend\"",
     "build:frontend": "cd frontend && yarn run build",
     "start:preview": "cd backend && yarn start",
     "start:production": "docker-compose up -d",
