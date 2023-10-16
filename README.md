@@ -2,8 +2,9 @@
 
 The Burrito Shop App is a web application that allows customers to browse and order burritos.
 
-**Explor the live Graphql here!**
-https://burrito-shop.online/graphql
+**Explor the Graphql API here!** https://api.burrito-shop.online/
+
+**View the UI here!** https://burrito-shop.online/
 
 ## Table of Contents
 

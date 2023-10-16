@@ -32,7 +32,7 @@ async function main() {
   });
   await server.start();
 
-  server.applyMiddleware({ app });
+  server.applyMiddleware({ app, path: "/" });
 
   app.listen({ port: 4000 });
 
