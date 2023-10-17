@@ -81,7 +81,7 @@ Examples on how to use the api.
 ```bash
 curl --request POST \
     --header 'content-type: application/json' \
-    --header 'api-key: api-key-123' \
+    --header 'Authorization: api-key-example' \
     --url http://localhost:4000/ \
     --data '{"query":"mutation {\n  createOrder {\n    id\n  }\n}"}'
 ```
@@ -99,7 +99,7 @@ _response_
 ```bash
 curl --request POST \
     --header 'content-type: application/json' \
-    --header 'api-key: api-key-123' \
+    --header 'Authorization: api-key-example' \
     --url http://localhost:4000/ \
     --data '{"query":"mutation($price: Float!, $size: String!, $name: String!) {\n  createBurrito(price: $price, size: $size, name: $name) {\n    id\n    name\n    size\n    price\n  }\n}","variables":{"price":5.99,"size":"large","name":"Steak"}}'
 ```
@@ -120,7 +120,7 @@ _response_
 ````bash
 curl --request POST \
     --header 'content-type: application/json' \
-    --header 'api-key: api-key-123' \
+    --header 'Authorization: api-key-example' \
     --url http://localhost:4000/ \
     --data '{"query":"mutation($orderId: Float!, $burritoId: Float!, $quantity: Float!) {\n  createOrderItem(orderId: $orderId, burritoId: $burritoId, quantity: $quantity) {\n    id\n    burrito {\n      name\n    }\n    quantity\n  }\n}","variables":{"orderId":1,"burritoId":1,"quantity":2}}'```
 ````
@@ -142,7 +142,7 @@ _response_
 ```bash
 curl --request POST \
     --header 'content-type: application/json' \
-    --header 'api-key: api-key-123' \
+    --header 'Authorization: api-key-example' \
     --url http://localhost:4000/ \
     --data '{"query":"query {\n  orders {\n    id\n    items {\n      burrito {\n        name\n      }\n      quantity\n    }\n    totalPrice\n  }\n}","variables":{}}'
 ```

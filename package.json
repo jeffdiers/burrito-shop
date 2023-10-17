@@ -2,6 +2,7 @@
   "name": "burrito-shop",
   "version": "1.0.0",
   "description": "Monolithic Burrito Shop Application",
+  "license": "ISC",
   "scripts": {
     "install:app": "cd backend && yarn install && cd ../frontend && yarn install",
     "db:migrate": "cd backend && yarn run migration:run",

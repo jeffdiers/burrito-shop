@@ -1,6 +1,7 @@
 {
-  "name": "frontend",
+  "name": "burrito-shop-frontend",
   "version": "0.0.1",
+  "license": "ISC",
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
