@@ -1,21 +1,3 @@
-# version: '3'
-# services:
-#   frontend:
-#     build:
-#       context: ./frontend # Path to the frontend application directory
-#       dockerfile: Dockerfile
-#     image: jeffdiers/burrito-shop-frontend:latest
-#     ports:
-#       - "3000:3000"
-#   backend:
-#     build:
-#       context: ./backend # Path to the backend application directory
-#       dockerfile: Dockerfile
-#     image: jeffdiers/burrito-shop-backend:latest
-#     env_file:
-#       - ${ENV_FILE} 
-#     network_mode: "host" # Run as host network to allow for postgres connection. This is not recommended for production.
-
 version: '3'
 services:
   frontend:

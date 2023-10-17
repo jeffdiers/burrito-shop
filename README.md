@@ -180,3 +180,5 @@ _response_
 - PostgreSQL
 - TypeORM
 - GraphQL
+- Docker
+- GitHub actions
